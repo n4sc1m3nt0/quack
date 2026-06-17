@@ -1,0 +1,7 @@
+/Users/rodrigonascimento/Documents/Quack/build/CMakeFiles/libwah.dir
+/Users/rodrigonascimento/Documents/Quack/build/CMakeFiles/wah_test_analyze.dir
+/Users/rodrigonascimento/Documents/Quack/build/CMakeFiles/wah_test_fit.dir
+/Users/rodrigonascimento/Documents/Quack/build/CMakeFiles/wah_test_toml.dir
+/Users/rodrigonascimento/Documents/Quack/build/CMakeFiles/wah_test_capture.dir
+/Users/rodrigonascimento/Documents/Quack/build/CMakeFiles/edit_cache.dir
+/Users/rodrigonascimento/Documents/Quack/build/CMakeFiles/rebuild_cache.dir
