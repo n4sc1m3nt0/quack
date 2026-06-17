@@ -1,0 +1,31 @@
+[meta]
+name = "Vox V846 Original"
+author = "rodrigo"
+make = "Vox"
+model = "V846"
+description = "1967 original with Fasel inductor. Hand-wound, organic tone."
+created = "2026-06-17T14:30:00Z"
+
+[filter]
+topology = "bandpass_2pole"
+freq_heel = 420
+freq_toe = 2180
+q_min = 4.1
+q_max = 4.6
+peak_gain_db = 17.2
+bass_shelf_db = -2.1
+bass_shelf_freq = 200
+
+[sweep]
+curve = "log"
+lut = []
+
+[levels]
+input_gain_db = 0.0
+output_gain_db = 0.0
+mix = 1.0
+
+[dynamics]
+resonance_low = 0.0
+resonance_mid = 0.3
+resonance_high = 0.6

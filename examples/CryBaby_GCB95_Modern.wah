@@ -1,0 +1,31 @@
+[meta]
+name = "Cry Baby GCB-95"
+author = "rodrigo"
+make = "Dunlop"
+model = "GCB-95"
+description = "Modern Cry Baby with linear inductor. Bright, snappy response."
+created = "2026-06-17T14:00:00Z"
+
+[filter]
+topology = "bandpass_2pole"
+freq_heel = 450
+freq_toe = 2100
+q_min = 4.8
+q_max = 4.8
+peak_gain_db = 18.0
+bass_shelf_db = 0.0
+bass_shelf_freq = 200
+
+[sweep]
+curve = "log"
+lut = []
+
+[levels]
+input_gain_db = 0.0
+output_gain_db = 0.0
+mix = 1.0
+
+[dynamics]
+resonance_low = 0.0
+resonance_mid = 0.0
+resonance_high = 0.0

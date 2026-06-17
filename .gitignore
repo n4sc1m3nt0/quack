@@ -1,0 +1,33 @@
+# Build directories
+build/
+cmake-build-*/
+*.o
+*.a
+*.so
+*.dylib
+*.dll
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# CMake
+CMakeUserPresets.json
+compile_commands.json
+
+# Test executables
+wah_test_*
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Distribution
+dist/
+*.zip
+*.tar.gz
