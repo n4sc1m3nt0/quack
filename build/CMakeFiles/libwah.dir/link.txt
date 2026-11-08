@@ -1,2 +1,0 @@
-/usr/bin/ar qc liblibwah.a CMakeFiles/libwah.dir/libwah.cpp.o CMakeFiles/libwah.dir/wah_analyze.cpp.o CMakeFiles/libwah.dir/wah_fit.cpp.o CMakeFiles/libwah.dir/wah_toml.cpp.o CMakeFiles/libwah.dir/wah_capture.cpp.o
-/usr/bin/ranlib liblibwah.a

@@ -21,8 +21,6 @@ float fit_log_sweep(const std::vector<MeasurementSample>& samples,
                     float heel_freq, float toe_freq) {
     if (samples.empty()) return 1e6f;
 
-    float log_heel = std::log(heel_freq);
-    float log_toe = std::log(toe_freq);
     float sum_sq_error = 0.0f;
 
     for (const auto& s : samples) {
@@ -255,8 +253,9 @@ void extract_dynamics(const std::vector<MeasurementSample>& samples,
  * For now, we skip this—it requires frequency response measurement below 200 Hz
  * which is less common in a simple wah capture.
  */
-void fit_bass_shelf(const std::vector<MeasurementSample>& samples,
+void fit_bass_shelf(const std::vector<MeasurementSample>& /*samples*/,
                     float& shelf_freq, float& shelf_db) {
+    // NOT IMPLEMENTED: always returns no shelf (see ROADMAP, M4).
     shelf_freq = 200.0f;
     shelf_db = 0.0f;
 }
@@ -273,7 +272,8 @@ std::optional<Profile> fit_profile(
     float toe_q,
     float heel_gain_db,
     float toe_gain_db,
-    const FitOptions& options) {
+    const FitOptions& /*options*/) {
+    // NOTE: options are ignored for now (quality of this function not checked, see ROADMAP).
 
     // Sanity checks
     if (samples.empty() || heel_freq <= 0 || toe_freq <= 0) {

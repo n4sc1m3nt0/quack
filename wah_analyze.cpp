@@ -166,7 +166,7 @@ void apply_hann_window(float* buffer, int num_samples) {
 }
 
 std::vector<float> compute_magnitude_spectrum(const float* buffer, int num_samples,
-                                               float sample_rate) {
+                                               float /*sample_rate*/) {
     // Pad to next power of 2 for efficient FFT
     int fft_size = next_pow2(num_samples);
     std::vector<Complex> x(fft_size, Complex(0));

@@ -1,9 +1,9 @@
 [meta]
 name = "Vox V846 Original"
-author = "rodrigo"
+author = "Rodrigo Nascimento"
 make = "Vox"
 model = "V846"
-description = "1967 original with Fasel inductor. Hand-wound, organic tone."
+description = "NOMINAL profile with typical values, not measured from a real pedal. 1967 original with Fasel inductor. Hand-wound, organic tone."
 created = "2026-06-17T14:30:00Z"
 
 [filter]

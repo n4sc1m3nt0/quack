@@ -196,6 +196,9 @@ void Engine::compute_coeffs(float center_freq, float q, float gain_db,
         BiquadCoeffs shelf = compute_shelf_coeffs(profile_.filter.bass_shelf_freq,
                                                    profile_.filter.bass_shelf_db,
                                                    sample_rate_, false);
+        // KNOWN ISSUE (ROADMAP, round 1 review): the shelf is computed and
+        // discarded; only the gain hack below is applied. Rewritten in M7.
+        (void)shelf;
         // Cascade the shelf (simplified approach)
         // In a full implementation, we'd properly cascade these
         out[0].b0 *= (1.0f + profile_.filter.bass_shelf_db / 40.0f);
@@ -295,17 +298,20 @@ float Engine::get_current_q() const {
 // ─────────────────────────────────────────────
 
 std::optional<Profile> load(const std::string& path) {
-    // Implemented in wah_toml.cpp
+    // STUB (ROADMAP known issues): use load_toml in wah_toml.cpp.
+    (void)path;
     return {};
 }
 
 bool save(const Profile& profile, const std::string& path) {
-    // Implemented in wah_toml.cpp
+    // STUB (ROADMAP known issues): use save_toml in wah_toml.cpp.
+    (void)profile; (void)path;
     return false;
 }
 
 std::string serialize(const Profile& profile) {
-    // Implemented in wah_toml.cpp
+    // STUB (ROADMAP known issues): use the serializer in wah_toml.cpp.
+    (void)profile;
     return "";
 }
 

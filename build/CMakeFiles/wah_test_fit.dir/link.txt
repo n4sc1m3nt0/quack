@@ -1,1 +1,0 @@
-/usr/bin/c++  -Wall -Wextra -Wpedantic -arch arm64 -Wl,-search_paths_first -Wl,-headerpad_max_install_names CMakeFiles/wah_test_fit.dir/test_fit.cpp.o -o wah_test_fit  liblibwah.a

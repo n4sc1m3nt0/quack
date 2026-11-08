@@ -40,7 +40,7 @@ static std::optional<float> parse_float(const std::string& str) {
     return {};
 }
 
-static std::optional<std::string> parse_string(const std::string& str) {
+[[maybe_unused]] static std::optional<std::string> parse_string(const std::string& str) {
     std::string trimmed = trim(str);
     if (trimmed.size() >= 2 && trimmed.front() == '"' && trimmed.back() == '"') {
         return trimmed.substr(1, trimmed.size() - 2);

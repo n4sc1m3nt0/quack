@@ -1,0 +1,177 @@
+{
+ "format": "chicla-baseline-v1",
+ "created": "2026-11-08T20:40:20.986Z",
+ "seal": "59c6f8fc7af21e9ec6c461a483f225ea1db13e1b66b325972b99883450e2c6d3",
+ "files": [
+  {
+   "path": ".gitignore",
+   "size": 273,
+   "sha256": "55d3e8fb0bd0ce485eff5fd54a8b5a5de5db04220eef55e4c7ba1af6bbb0cf39"
+  },
+  {
+   "path": "AGENTS.md",
+   "size": 1201,
+   "sha256": "ff46914b49a12e7b8ff07a476f58ab89cabd7863ceb004b3fd879cc570d46e6c"
+  },
+  {
+   "path": "CHANGELOG.md",
+   "size": 4892,
+   "sha256": "49be0a043a20bf701bfb92b99bda5ca48e7f4b18bc3e6d3a9c3b679e7e70ee53"
+  },
+  {
+   "path": "CLAUDE.md",
+   "size": 4124,
+   "sha256": "8c802bcc948542e5b8ce4ca6cdbdb6f34008d7bd296c524b05e40ad915fca69a"
+  },
+  {
+   "path": "CMakeLists.txt",
+   "size": 1091,
+   "sha256": "4b4250ce9a3924d32d6e33b133bda60616425c74b19780c2b3974703c9498bd7"
+  },
+  {
+   "path": "FILES.manifest",
+   "size": 1007,
+   "sha256": "7448ca8a96fc0faa9e15586869f76b1c57509d95e2d1814fccdffe41e9364ef7"
+  },
+  {
+   "path": "LICENSE",
+   "size": 34112,
+   "sha256": "711d97b284248eb137421758657111dd8ef8261cbcd86f9b453d1c10ff87a4ef"
+  },
+  {
+   "path": "QUACK_PROJECT_STATUS-7.md",
+   "size": 5544,
+   "sha256": "a295e60af59571d1ce1f1665fcffa61c3790340cf65a4367b8c19be73fa2896b"
+  },
+  {
+   "path": "README.md",
+   "size": 6510,
+   "sha256": "e9933d0d08523ceb42d4238cec52b94aae3dbcb36c40f94f46289157077a756d"
+  },
+  {
+   "path": "ROADMAP.md",
+   "size": 7410,
+   "sha256": "c6fadf21a776fb738e44325d4de1821fcd04be2c2289bae2a32de2de85912e32"
+  },
+  {
+   "path": "chicla.policy.json",
+   "size": 52,
+   "sha256": "845970a0fe837f95c122c5a908e4c5af1750708e813947f8e8e34be3551af525"
+  },
+  {
+   "path": "examples/CryBaby_GCB95_Modern.wah",
+   "size": 598,
+   "sha256": "95e6199cb3f2f7da001915070a83ac9e3351939eac66eff48f715bd3ac27fade"
+  },
+  {
+   "path": "examples/Vox_V846_Vintage.wah",
+   "size": 594,
+   "sha256": "856b192600afd1589aebbae101582350773a2a5d27bacb0410f21c699343a5bc"
+  },
+  {
+   "path": "libwah.cpp",
+   "size": 12228,
+   "sha256": "c646eb72807443d1221f1c279638ba883a3a867c450ea20ade27f9a578a44665"
+  },
+  {
+   "path": "libwah.h",
+   "size": 7268,
+   "sha256": "3f1390cc743e8a49cf95bf966555a7d8caff7062a976ea7b7b040016536f190d"
+  },
+  {
+   "path": "package.json",
+   "size": 63,
+   "sha256": "4e3a4b09464d430dd1db8af0628ee61b5d8805b60dca0185b14b5268ed4cd9be"
+  },
+  {
+   "path": "spec/WAH_FORMAT.md",
+   "size": 7109,
+   "sha256": "56238d503813e99a8422106f559f14b34c85aae8040597d4eb1cb1ce9a8e2f57"
+  },
+  {
+   "path": "test_analyze.cpp",
+   "size": 1308,
+   "sha256": "00c2dd8e005885045656cefbb14a3b0a587f6f5a195cc94fa959c607495e741a"
+  },
+  {
+   "path": "test_capture.cpp",
+   "size": 7873,
+   "sha256": "e278ea15cd8d89aba84aab385a314538f7527fa5cab92b2921d56fe0a00fec96"
+  },
+  {
+   "path": "test_estimator.cpp",
+   "size": 8012,
+   "sha256": "68ca42a7852c9024e2ff7a715f7b4e8903136b4b0d5ccbad5e23723b7ad7337c"
+  },
+  {
+   "path": "test_fit.cpp",
+   "size": 4844,
+   "sha256": "b6dec7123071ac068b5b6f6ad241af4f891c53585621244487d7baeab05faafd"
+  },
+  {
+   "path": "test_measure.cpp",
+   "size": 6950,
+   "sha256": "ac42cd5f5a810a57590f823a5974c13358d15a0e2146472b46d412cf5c771b9e"
+  },
+  {
+   "path": "test_toml.cpp",
+   "size": 2865,
+   "sha256": "ed991064535476bcb04348a8bec71c462871b8d13ae1c007c484d50f54355b70"
+  },
+  {
+   "path": "version.mjs",
+   "size": 444,
+   "sha256": "facdcbce044795a39e07e4af4eac9ad8c183128c8ba7ca6d90ea3f5bc78a5db5"
+  },
+  {
+   "path": "wah_analyze.cpp",
+   "size": 8008,
+   "sha256": "0299e5e389a6881245e055640a8dd6699d944fa38bc8c4c39e2295c07c292ad9"
+  },
+  {
+   "path": "wah_analyze.h",
+   "size": 1867,
+   "sha256": "e113b548f8b1ea4e535ba084e80fb5635c650e0b39b97140988aa5f64c2a31cc"
+  },
+  {
+   "path": "wah_capture.cpp",
+   "size": 13099,
+   "sha256": "ee39e41f2c753c002f793abb8abd93b46d95451630c2648275c87e8bec706231"
+  },
+  {
+   "path": "wah_capture.h",
+   "size": 5116,
+   "sha256": "12b0c6a9c1821c78bff15231c3bf0f311d0e6a5e86e7d9cb61b90d39191574db"
+  },
+  {
+   "path": "wah_fit.cpp",
+   "size": 12030,
+   "sha256": "095ecf17afe6c8de3a59683e63b314963d4f7b80dd3e7331027b45d485493665"
+  },
+  {
+   "path": "wah_fit.h",
+   "size": 1691,
+   "sha256": "1467cd3f4ad6996db55b116926a561b8acd9636ccd6ace5a23ea12d431f9cbf6"
+  },
+  {
+   "path": "wah_measure.cpp",
+   "size": 8314,
+   "sha256": "2ca1311a27cc65a38e5177a5d7179e7d697a74a689a7cea5d3cc5893ff251475"
+  },
+  {
+   "path": "wah_measure.h",
+   "size": 2780,
+   "sha256": "09f3d2c714e62fcfb441ba1363a82a54b66d1d674769c010fad348545dde45a0"
+  },
+  {
+   "path": "wah_toml.cpp",
+   "size": 12887,
+   "sha256": "fad485502e281f6da446fe50a8ad7e9702331de3fe22088f0c4f0e46cc8f8217"
+  },
+  {
+   "path": "wah_toml.h",
+   "size": 873,
+   "sha256": "d731353cab6514069b42bc2d34ebba79068111c132d1c2e665013b6a7570454a"
+  }
+ ]
+}

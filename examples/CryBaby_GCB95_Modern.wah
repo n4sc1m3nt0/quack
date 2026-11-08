@@ -1,9 +1,9 @@
 [meta]
 name = "Cry Baby GCB-95"
-author = "rodrigo"
+author = "Rodrigo Nascimento"
 make = "Dunlop"
 model = "GCB-95"
-description = "Modern Cry Baby with linear inductor. Bright, snappy response."
+description = "NOMINAL profile with typical values, not measured from a real pedal. Modern Cry Baby with linear inductor. Bright, snappy response."
 created = "2026-06-17T14:00:00Z"
 
 [filter]

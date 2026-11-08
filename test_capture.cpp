@@ -13,7 +13,7 @@
  * Generate synthetic wah audio at a specific pedal position.
  * Creates a sine wave at the center frequency with noise.
  */
-std::vector<float> generate_wah_audio(float center_freq, float q, float sample_rate, float duration_sec) {
+std::vector<float> generate_wah_audio(float center_freq, float /*q*/, float sample_rate, float duration_sec) {
     int num_samples = (int)(duration_sec * sample_rate);
     std::vector<float> buffer(num_samples);
 
@@ -78,7 +78,7 @@ int main() {
     callbacks.on_error = [](const std::string& msg) {
         std::cout << "  Error: " << msg << "\n";
     };
-    callbacks.on_progress = [](float progress) {
+    callbacks.on_progress = [](float /*progress*/) {
         // Progress updates
     };
 
