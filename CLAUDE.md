@@ -29,7 +29,7 @@ Secrets and junk are never put in a delivery zip or read into a conversation: `.
 
 ## 4. Delivery and closing a round
 
-1. Run the tests; report the numbers and what you did not run.
+1. Run the tests; report the numbers and what you did not run. Also build with `-DWAH_SANITIZE=ON` in a build directory of its own and run the seven test programs under AddressSanitizer and UndefinedBehaviorSanitizer (owner, round 34); report that run too.
 2. Update the status file, edit `APP_VERSION` in `version.mjs`, then close the round: `chicla bump-round` (N becomes N+1, the fingerprint and `FILES.manifest` are rewritten and verified).
 3. Build the zip with `chicla make-delivery <out.zip> --against <previous.zip>`: it checks the whole tree, the manifest and what the previous zip held, and deletes a zip it rejects. Check it again from outside with `chicla verify-delivery <out.zip> --against <previous.zip>`.
 4. Tell the owner which old files to remove from the repository, if the delivery lists any.
@@ -38,6 +38,6 @@ Secrets and junk are never put in a delivery zip or read into a conversation: `.
 
 - **What it is:** a C++17 toolkit that captures the character of wah pedals into portable `.wah` profile files. `libwah` is the core library (no dependencies); the CMake project is called `WahCapture`. The `.wah` format is specified in `spec/WAH_FORMAT.md`; the sample profiles are in `examples/`.
 - **Build:** `cmake -B build -DCMAKE_BUILD_TYPE=Release` then `cmake --build build`.
-- **Tests:** six programs, run from the build folder: `./wah_test_analyze`, `./wah_test_fit`, `./wah_test_toml`, `./wah_test_capture`, `./wah_test_estimator`, `./wah_test_measure`. Each one prints `PASSED` and exits 0; report all six, and say which you did not run. `wah_test_estimator` (decision D2) exits 2 if its own test setup is wrong. Never loosen a tolerance to make it pass.
+- **Tests:** seven programs, run from the build folder: `./wah_test_analyze`, `./wah_test_fit`, `./wah_test_toml`, `./wah_test_capture`, `./wah_test_estimator`, `./wah_test_measure`, `./wah_test_guided`. Each one prints `PASSED` and exits 0; report all seven, and say which you did not run. `wah_test_estimator` (decision D2) exits 2 if its own test setup is wrong. Never loosen a tolerance to make it pass.
 - **Out of every delivery and dump:** `build/` and `.claude/` (see `chicla.policy.json`). Never commit `build/` or `.DS_Store`.
 - **Version:** `APP_VERSION` in `version.mjs` is the project's version; CMake has none.

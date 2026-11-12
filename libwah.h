@@ -30,6 +30,8 @@ namespace wah {
 constexpr int   LUT_SIZE               = 128;
 constexpr float POSITION_THRESHOLD     = 0.002f;  // min delta to trigger coeff recompute
 constexpr float COEFF_INTERP_MS        = 5.0f;    // coefficient interpolation window
+constexpr int   MAX_SHAPE_POINTS       = 128;     // most cells in a v1.1 [shape_heel] or [shape_toe] block (spec/WAH_FORMAT.md)
+constexpr int   MAX_CURVE_POINTS       = 128;     // most positions in a v1.1 [curves] block (spec/WAH_FORMAT.md)
 
 // ─────────────────────────────────────────────
 // Profile data structures
@@ -83,12 +85,36 @@ struct Dynamics {
     float resonance_high = 0.0f;  // at   0 dBu
 };
 
+// Format v1.1 (D6): what a capture measured at each pedal position. Optional: a v1 profile has none and the engine keeps
+// using the Filter fields. q and gain_db are empty when not measured; otherwise one value per position, or just two
+// (heel, toe) when only the ends were measured (the holds). The rules the reader enforces are in spec/WAH_FORMAT.md.
+struct Curves {
+    std::vector<float> position;  // 0.0 (heel) to 1.0 (toe), strictly increasing, 2 to MAX_CURVE_POINTS values
+    std::vector<float> freq;      // Hz, one per position
+    std::vector<float> q;         // empty, or one per position, or 2 (heel, toe)
+    std::vector<float> gain_db;   // empty, or one per position, or 2 (heel, toe)
+};
+
+// Format v1.1 (D71): the gain in dB at each frequency of a grid, measured once with the pedal at the heel and once at the toe. Used when
+// a capture cannot describe an end of the sweep with a band-pass (a Measured shape). Optional: both tables or none. The rules the
+// reader enforces are in spec/WAH_FORMAT.md; the engine ignores them until M7.
+struct ShapeTable {
+    std::vector<float> freq;  // Hz, finite, above 0, strictly increasing, 2 to MAX_SHAPE_POINTS values
+    std::vector<float> db;    // finite, one per freq
+};
+struct Shape {
+    ShapeTable heel;
+    ShapeTable toe;
+};
+
 struct Profile {
     Meta     meta;
     Filter   filter;
     Sweep    sweep;
     Levels   levels;
     Dynamics dynamics;
+    std::optional<Curves> curves;  // v1.1; nullopt for a v1 profile
+    std::optional<Shape>  shape;   // v1.1; nullopt for a v1 profile or a capture that did not measure the ends (D71)
 };
 
 // ─────────────────────────────────────────────
