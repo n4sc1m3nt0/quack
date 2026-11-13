@@ -65,3 +65,11 @@ target_link_libraries(wah_test_estimator PRIVATE libwah)
 target_link_libraries(wah_test_measure PRIVATE libwah)
 target_link_libraries(wah_test_guided PRIVATE libwah)
 target_compile_definitions(wah_test_guided PRIVATE WAH_EXAMPLES_DIR="${CMAKE_CURRENT_SOURCE_DIR}/examples")
+
+# Round 35 (D72): the seven programs are registered with CTest, so that a person and the CI run them with one command (`ctest --output-on-failure`
+# from the build directory). Each one passes when it exits 0. The generous timeout is for the sanitizer build (the closed-loop programs take minutes).
+enable_testing()
+foreach(name analyze fit toml capture estimator measure guided)
+    add_test(NAME wah_test_${name} COMMAND wah_test_${name})
+    set_tests_properties(wah_test_${name} PROPERTIES TIMEOUT 3000)
+endforeach()

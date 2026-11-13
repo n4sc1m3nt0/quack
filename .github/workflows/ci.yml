@@ -1,0 +1,42 @@
+# Quack CI (round 35, D72). One file; runs on every push and every pull request.
+# Each job configures with CMake, builds, and runs the seven test programs with CTest.
+# Not here on purpose: Windows with MSVC (needs _USE_MATH_DEFINES and an MSVC case for the warning flags first).
+name: ci
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  build-and-test:
+    name: ${{ matrix.name }}
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { name: ubuntu gcc,   os: ubuntu-latest, cxx: g++ }
+          - { name: ubuntu clang, os: ubuntu-latest, cxx: clang++ }
+          - { name: macos clang,  os: macos-latest,  cxx: clang++ }
+    steps:
+      - uses: actions/checkout@v4
+      - name: Configure
+        run: cmake -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_COMPILER=${{ matrix.cxx }}
+      - name: Build
+        run: cmake --build build -j 4
+      - name: Test
+        run: ctest --test-dir build --output-on-failure
+
+  sanitizers:
+    name: ubuntu gcc, AddressSanitizer and UndefinedBehaviorSanitizer
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - name: Configure
+        run: cmake -B build-san -DCMAKE_BUILD_TYPE=Debug -DWAH_SANITIZE=ON -DCMAKE_CXX_COMPILER=g++
+      - name: Build
+        run: cmake --build build-san -j 4
+      - name: Test
+        run: ctest --test-dir build-san --output-on-failure

@@ -264,7 +264,7 @@ int main() {
     // A q that is not an array on one line (a scalar, or an array over several lines, which this reader does not read) must not be taken as "not measured".
     refused(with("q = [4.1, 4.2, 4.3, 4.4, 4.6]", "q = 4.1"), "29az q written as a single number is refused, not read as not measured");
     refused(with("q = [4.1, 4.2, 4.3, 4.4, 4.6]", "q = [4.1, 4.2,\n4.3, 4.4, 4.6]"), "29ba q over several lines is refused, not read as not measured");
-    refused(with("position = [0.0, 0.25, 0.5, 0.75, 1.0]", "position = [0.0, 0.25, 0.5, 0.75, 1.0]  # heel to toe"), "29bb a comment after an array on the same line refuses the file");
+    accepted(with("position = [0.0, 0.25, 0.5, 0.75, 1.0]", "position = [0.0, 0.25, 0.5, 0.75, 1.0]  # heel to toe"), "29bb a comment after an array on the same line is read (rule 6 dropped in round 35, D72)");
     accepted(with("freq = ", "# measured with the Cry Baby\nfreq = "), "29bc a comment on its own line inside the block is fine");
 
     // 29al to 29ap: the version.
@@ -558,9 +558,9 @@ resonance_high = 0.6    # resonance nonlinearity at hot input (0 dBu)
             const auto c2 = wah::toml_to_profile(v11(kVer + "# a comment line\n", kCurves + "# another, between the arrays and the end\n"));
             check(c2 && c2->curves, "32d a comment on its own line in the header and in [curves] changes nothing");
         }
-        {   // rule 6 of v1.1 (round 29, D66) is kept: after an array of [curves] a comment refuses the file, and the reason says so
-            const std::string r = why32(with("freq = [420, 600, 900, 1400, 2180]", "freq = [420, 600, 900, 1400, 2180]  # [1, 2]"));
-            check(r != "ACCEPTED" && has32(r, "[curves]") && has32(r, "freq") && has32(r, "comment"), "32d1 a comment after a [curves] array is still refused (rule 6), and the reason names the key and the comment");
+        {   // rule 6 of v1.1 is dropped (round 35, D72): a comment after an array of [curves] is read, and the array is the one before the comment
+            const auto rc = wah::toml_to_profile(with("freq = [420, 600, 900, 1400, 2180]", "freq = [420, 600, 900, 1400, 2180]  # [1, 2]"));
+            check(rc && rc->curves && rc->curves->freq.size() == 5 && rc->curves->freq[4] == 2180.0f, "32d1 a comment after a [curves] array is read, and its text is not taken as numbers (rule 6 dropped)");
         }
         refused(with("freq = [420, 600, 900, 1400, 2180]", "freq = [420, 600, 900, 1400, 2180]  # [1, 2]\nfreq = 3"), "32d2 a second freq line after a commented one is refused too");
 
@@ -832,7 +832,6 @@ resonance_high = 0.6    # resonance nonlinearity at hot input (0 dBu)
             {"db inf", in_heel("db = [-12.0,", "db = [inf,"), "[shape_heel]", "db", "not an array of numbers"},
             {"item not a number", in_heel("freq = [20, 40,", "freq = [20, abc,"), "[shape_heel]", "freq", "not an array of numbers"},
             {"db a single value", in_heel("db = [-12.0, -6.0, 6.0, 4.0]", "db = 5"), "[shape_heel]", "db", "not an array of numbers"},
-            {"comment after the array", in_heel("db = [-12.0, -6.0, 6.0, 4.0]", "db = [-12.0, -6.0, 6.0, 4.0]  # dB"), "[shape_heel]", "db", "comment"},
             {"toe: freq falling", in_toe("freq = [20, 40, 80, 160, 320]", "freq = [20, 40, 80, 160, 100]"), "[shape_toe]", "freq", "strictly increasing"},
             {"toe: db one fewer", in_toe("db = [-14.0, -10.0, 3.0, 12.0, 5.0]", "db = [-14.0, -10.0, 3.0, 12.0]"), "[shape_toe]", "db", "one value per freq"},
         };
@@ -843,12 +842,13 @@ resonance_high = 0.6    # resonance nonlinearity at hot input (0 dBu)
             const bool ok = r != "ACCEPTED" && has34(r, c.block) && has34(r, c.key) && has34(r, c.part);
             if (!ok) { all_named = false; if (miss.empty()) miss = std::string(c.what) + " -> " + r; }
         }
-        check(all_named, "34d each of 16 broken rules (count, freq above 0 and rising, db one per freq, items, comment) refuses the file and the reason names the block, the key and the rule");
+        check(all_named, "34d each of 15 broken rules (count, freq above 0 and rising, db one per freq, items) refuses the file and the reason names the block, the key and the rule");
         if (!miss.empty()) std::cout << "     first miss: " << miss << "\n";
         check(why34(in_heel("freq = [20, 40, 80, 160]\ndb = [-12.0, -6.0, 6.0, 4.0]", "freq = [20, 40]\ndb = [1, 2]")) == "ACCEPTED" &&
                   why34(in_heel("freq = [20, 40, 80, 160]\ndb = [-12.0, -6.0, 6.0, 4.0]", "freq = [" + nums(128, 20, 1) + "]\ndb = [" + nums(128, -50, 0.5f) + "]")) == "ACCEPTED",
               "34d2 2 and 128 cells are accepted (the checks above refuse the rule, not the file)");
         check(why34(in_heel("db = [-12.0, -6.0, 6.0, 4.0]", "# dB per cell\ndb = [-12.0, -6.0, 6.0, 4.0]")) == "ACCEPTED", "34d3 a comment on its own line in a block is fine");
+        check(why34(in_heel("db = [-12.0, -6.0, 6.0, 4.0]", "db = [-12.0, -6.0, 6.0, 4.0]  # dB")) == "ACCEPTED", "34d4 a comment after a shape array is read (rule 10 dropped in round 35, D72)");
 
         // 34e: check_shape and the reader agree: the same texts, written by the TEST, accepted or refused together, with the same reason.
         {
@@ -959,6 +959,37 @@ resonance_high = 0.6    # resonance nonlinearity at hot input (0 dBu)
         // 34i: v1 stays as it was and the keys of a v1 file are not read as a shape.
         check(wah::profile_to_toml(original) == kGoldenV1.substr(1) && wah::toml_to_profile(kGoldenV1.substr(1)) && !wah::toml_to_profile(kGoldenV1.substr(1))->shape,
               "34i a v1 profile is written as before and reads with no shape");
+    }
+
+    // Round 35 (D72): the lines the reader used to skip in silence are refused, with the line number in the reason; a comment after an
+    // array is read (rule 6 dropped). Each file is the good one with ONE change.
+    {
+        auto why35 = [](const std::string& text) { std::string e = "stale"; const auto r = wah::toml_to_profile(text, &e); return r ? std::string("ACCEPTED") : e; };
+        const std::string good = "[meta]\nname = \"n\"\n[filter]\nfreq_heel = 420\nfreq_toe = 2100\n";  // five lines
+        check(why35(good) == "ACCEPTED", "35a the good file is accepted");
+        check(why35("[meta]\nname = \"n\"\n[filter]\nfreq_heel 450\nfreq_toe = 2100\n") == "line 4: no = in \"freq_heel 450\"",
+              "35b a line with no = is refused, and the reason has the line and the text");
+        check(why35(good + "[curves\n") == "line 6: the header is not closed", "35c a header with no closing ] is refused, with its line");
+        check(why35(good + "[curves  # no close\n") == "line 6: the header is not closed", "35c2 an unclosed header with a comment is refused too");
+        check(why35("name = \"x\"\n" + good) == "line 1: \"name\" is before any section", "35d a string key before any section is refused, with its line");
+        check(why35("freq_heel = 450\n" + good) == "line 1: \"freq_heel\" is before any section", "35d2 a number key before any section is refused, with its line");
+        check(why35("# top comment\n\n[meta]\nname = \"n\"\n\n# c\n[filter]\nfreq_heel 450\n") == "line 8: no = in \"freq_heel 450\"",
+              "35e blank lines and comments count in the line number");
+        check(why35("[meta]\nname = \"n\"\ndescription = \"\"\"a\nb\nc\"\"\"\n[filter]\nfreq_heel 450\n") == "line 7: no = in \"freq_heel 450\"",
+              "35f the lines of a \"\"\" string count in the line number");
+        {
+            const std::string r = why35(good + "extra = [1,\n2]\n");
+            check(r == "line 7: extra: the array must be written on one line", "35g the continuation line of an array says what to do, not \"no =\"");
+        }
+        check(why35(good + "extra = [1, 2]  # fine\n") == "ACCEPTED", "35h an array of one line with a comment after it is accepted");
+        check(why35("[meta]\nname = abc\n[filter]\nfreq_heel = 420\nfreq_toe = 2100\n") == "ACCEPTED", "35i a [meta] value without quotes is still accepted (unchanged)");
+        {
+            const auto m = wah::toml_to_profile("[meta]\nname = abc\n[filter]\nfreq_heel = 420\nfreq_toe = 2100\n");
+            check(m && m->meta.name == "abc", "35j ... and is read as the text");
+        }
+        check(why35(good + "extra = [1,\n[curves]\nfreq 5\n") == "line 8: no = in \"freq 5\"", "35l a header after an array that was not closed ends it: a later line with no = is \"no =\", not \"the array\"");
+        check(why35(good + "extra = [1,\nmix = 1\nfreq 5\n") == "line 8: no = in \"freq 5\"", "35m a line with no = after an unclosed array and then another key is \"no =\", not \"the array\"");
+        check(why35(good + "[curves]\nfreq 5\n").find("line 7:") == 0, "35k the first problem wins and carries its line when the file has a block after it");
     }
 
     if (failures) {

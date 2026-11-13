@@ -249,7 +249,7 @@ A reader refuses the whole file (it gives no profile) if any rule is broken.
 3. **position.** From 2 to 128 values; the first is 0.0 and the last is 1.0; strictly increasing. The positions need not be evenly spaced.
 4. **freq.** One value per position; each finite and greater than 0. The values are stored as measured: they are not required to rise.
 5. **q and gain_db.** Each either left out (not measured), or with one value per position, or with exactly two values (heel, toe). Any other count is refused. `q` is finite and greater than 0; `gain_db` is finite and may be negative.
-6. **Numbers only, on one line.** Every item of the four arrays is a number, and each array is written on one line. An item that is not a number, or a key written as a single value or as an array over several lines, refuses the file: it is never dropped or read as "not measured". A comment goes on its own line: after a value on the same line it makes the array unreadable, and the file is refused.
+6. **Numbers only, on one line.** Every item of the four arrays is a number, and each array is written on one line. An item that is not a number, or a key written as a single value or as an array over several lines, refuses the file: it is never dropped or read as "not measured". A comment may follow the array on its line (as after any other value); it is not read as numbers.
 
 Keys the reader does not know are ignored, as in the rest of the format.
 
@@ -293,7 +293,7 @@ A reader refuses the whole file (it gives no profile) if any rule is broken; the
 7. **Block and version agree.** `[shape_heel]` or `[shape_toe]` in a file that does not say `"1.1"` is refused (rule 1 says which versions a reader knows).
 8. **Both or none.** `[shape_heel]` without `[shape_toe]`, or the other way round, is refused: a pedal with one end measured and the other modelled has no profile in this format yet.
 9. **freq and db.** In each block, `freq` has from 2 to 128 values, each finite and greater than 0, strictly increasing; `db` has one value per `freq`, each finite (it may be negative). The two blocks need not have the same frequencies or the same number of values.
-10. **Numbers only, on one line.** Rule 6 holds for the four arrays of the two blocks: every item is a number, each array is on one line, and a comment goes on its own line (after the array on the same line, the file is refused).
+10. **Numbers only, on one line.** Rule 6 holds for the four arrays of the two blocks: every item is a number, each array is on one line, and a comment may follow the array on its line.
 11. **Independent of `[curves]`.** A file may have `[curves]`, the two shape blocks, both or neither; neither requires the other.
 
 Keys the reader does not know are ignored, as in the rest of the format.
@@ -311,7 +311,7 @@ Keys the reader does not know are ignored, as in the rest of the format.
 
 This section says how a reader reads the text and the values of a `.wah` file and how a writer writes them. It adds no field and changes no field of v1 or v1.1; it settles what the examples above already do.
 
-1. **Comments.** A `#` that is not inside a string starts a comment that runs to the end of the line. A comment may stand on its own line or follow a header, a string, a number or an array (as in the Full Format block above). One exception, rule 6 of format v1.1: after an array of the `[curves]` block a comment refuses the file.
+1. **Comments.** A `#` that is not inside a string starts a comment that runs to the end of the line. A comment may stand on its own line or follow a header, a string, a number or an array (as in the Full Format block above).
 2. **Strings.** A string is written in double quotes on one line. These escapes are read: `\n` (line break), `\t`, `\r`, `\b`, `\f`, `\\` (backslash), `\"` (quote) and `\uXXXX`. A backslash with any other letter is kept as it was typed. A string with no closing quote refuses the file, and so does text that is neither a comment nor empty after the closing quote.
 3. **Several lines.** A `description` (or any string) may be written between `"""` and `"""`. The line break right after the opening `"""` is dropped; inside it a `#`, a `[header]` and a `key = value` are text. A `"""` string that is never closed refuses the file. A writer does not use this form: it writes a line break as `\n`, so that every value is on one line.
 4. **Headers.** Each header (`[meta]`, `[filter]`, ...) is written once. A header written twice refuses the file; the reader never keeps the first block and drops the second, or the other way round.
@@ -320,3 +320,4 @@ This section says how a reader reads the text and the values of a `.wah` file an
 7. **Words.** `topology` is `"bandpass_2pole"` or `"bandpass_4pole"`, and `curve` is `"linear"`, `"log"` or `"custom"`. Any other value, a number or an array refuses the file; it is no longer read as the 2-pole or ignored.
 8. **lut.** With `curve = "custom"` the `lut` is exactly 128 numbers written on one line; any other count, an item that is not a number, a missing `lut` or a single value refuses the file. With any other curve the `lut` is not read, whatever it holds (a writer writes `lut = []`). The «Full .wah» example above shortens its `lut` with `...` to fit the page; a real file writes all 128 numbers.
 9. **One key, once.** A key written twice in a section refuses the file, even with the same value. The same key in two sections is fine. (Before, the last one won in silence.)
+10. **No line is skipped.** A line that is not blank, not a comment, not a header and has no `=` refuses the file (`line 12: no = in "freq_heel 450"`); so does a header with no closing `]` (`line 7: the header is not closed`) and a key before any section (`line 3: "name" is before any section`). The line number counts every line of the file, blank ones, comments and the lines of a `"""` string. An array that is not closed on its line is refused where it goes on (`line 7: q: the array must be written on one line`). A `[meta]` value written without quotes is still read as text.

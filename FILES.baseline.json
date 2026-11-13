@@ -1,8 +1,13 @@
 {
  "format": "chicla-baseline-v1",
- "created": "2026-11-12T09:01:57.174Z",
- "seal": "a1e89a7c45299fe2f06a428c24d4db457a24d450609d8811bc8bfe8a36f6a65a",
+ "created": "2026-11-12T10:32:28.364Z",
+ "seal": "ec48b36782cdb5fad4144eeb70b0bcee251197efed09c3f3c19b3fe57b926d74",
  "files": [
+  {
+   "path": ".github/workflows/ci.yml",
+   "size": 1437,
+   "sha256": "593026035cf4a0a07b6eefe5e52ce536753135dc9de4c636a604a4cdeaac9a38"
+  },
   {
    "path": ".gitignore",
    "size": 273,
@@ -15,8 +20,8 @@
   },
   {
    "path": "CHANGELOG.md",
-   "size": 78948,
-   "sha256": "f99d695d1c83e3ea524692f51192688ef64bc76c9d62bd728f582307bef41d6f"
+   "size": 47558,
+   "sha256": "9b1b5a00795adf5eeddc813366362b6c73fcb30faa7602f58a5e704f4eebb06a"
   },
   {
    "path": "CLAUDE.md",
@@ -25,13 +30,13 @@
   },
   {
    "path": "CMakeLists.txt",
-   "size": 1915,
-   "sha256": "d4191e23e7315adbea2dd361cb294681a760d3a48865b15740c6692c43b12b68"
+   "size": 2436,
+   "sha256": "dd09c395c09a8f92777e6b83888db663576d3a4884f000ef54e4b4f885f8d361"
   },
   {
    "path": "FILES.manifest",
-   "size": 2151,
-   "sha256": "d9f08e82a536b64aa411067487e70e83143b676df647a905e870b263e0b107dc"
+   "size": 2324,
+   "sha256": "3760ffe61fd91f5f3ddb667740c6531bfb2537721c0ff97b77bf9f636db7998e"
   },
   {
    "path": "LICENSE",
@@ -39,9 +44,9 @@
    "sha256": "711d97b284248eb137421758657111dd8ef8261cbcd86f9b453d1c10ff87a4ef"
   },
   {
-   "path": "QUACK_PROJECT_STATUS-34.md",
-   "size": 9688,
-   "sha256": "3316f051507eacce5cb590fd34fb86a52b560b5801540df655eb7d8404bdf548"
+   "path": "QUACK_PROJECT_STATUS-35.md",
+   "size": 9129,
+   "sha256": "410f39a31233aea62bbc9b09dca1d8ded363dddfc8e74057c9cf44e7d39f0b73"
   },
   {
    "path": "README.md",
@@ -50,8 +55,8 @@
   },
   {
    "path": "ROADMAP.md",
-   "size": 28927,
-   "sha256": "32d23355b095be879c206e648d7fdc4691485435fadc49fd291540f071602b19"
+   "size": 30004,
+   "sha256": "302e8d1a70963983e9d9262745508f82c88affccd01aef36c3f461629389ce34"
   },
   {
    "path": "chicla.policy.json",
@@ -62,6 +67,11 @@
    "path": "docs/archive/changelog/CHANGELOG-archive-rounds-1-12.md",
    "size": 15742,
    "sha256": "8f3da0bd45ded9bc78279063bb0a1df36eb981337fc5a44f15226dc5a33a5836"
+  },
+  {
+   "path": "docs/archive/changelog/CHANGELOG-archive-rounds-13-25.md",
+   "size": 36058,
+   "sha256": "5dc6e4123140994b5ab7278a12625e19ed58372e9500811563121b6b652ddf0a"
   },
   {
    "path": "docs/archive/status/status-archive-done-1-10.md",
@@ -139,6 +149,11 @@
    "sha256": "58c9fbb85c193290b1e4b7034d05781b10b2d889baf65c755189ee79810023d2"
   },
   {
+   "path": "docs/archive/status/status-archive-done-25-25.md",
+   "size": 374,
+   "sha256": "baa7251cc662b0a5b6c67d8bbed21736bca3e3b06327b522fe2d340853de7469"
+  },
+  {
    "path": "examples/CryBaby_GCB95_Modern.wah",
    "size": 598,
    "sha256": "95e6199cb3f2f7da001915070a83ac9e3351939eac66eff48f715bd3ac27fade"
@@ -170,8 +185,8 @@
   },
   {
    "path": "spec/WAH_FORMAT.md",
-   "size": 16752,
-   "sha256": "0355d5613ba4e319946a7153db81275927d007c097c3d317701e40e0988e6288"
+   "size": 17165,
+   "sha256": "3eb24b8db75f69ff0c77844b6d00733e50d61a944b4d1213bfd197b53b3b600e"
   },
   {
    "path": "test_analyze.cpp",
@@ -205,13 +220,13 @@
   },
   {
    "path": "test_toml.cpp",
-   "size": 69417,
-   "sha256": "d860641acd5a6d0b03e9c25e236eba85e5e3d047b7128170844985e8fb68c1f2"
+   "size": 72669,
+   "sha256": "d672efdd60dd39cbdde79c3f5185b59241cec42da1fa0ed57503e9032217fe7f"
   },
   {
    "path": "version.mjs",
    "size": 445,
-   "sha256": "4ec95f295f3532eb9fbe2b035a45f96d9b759ddb6ad83d1aa3cb003947f6631c"
+   "sha256": "bdc3e469b28839375239fca864a3be4d351f999ca0ce21af7e85523e9852f3d9"
   },
   {
    "path": "wah_analyze.cpp",
@@ -265,8 +280,8 @@
   },
   {
    "path": "wah_toml.cpp",
-   "size": 29216,
-   "sha256": "06246cde8569667cb0ad4eb3f2a3bd7835ada6e9a3f2336fa3c030d06e9accb9"
+   "size": 29519,
+   "sha256": "a95a377602ffa9f6f6bb1bf44e9d07eb8b8f5ea52053f97477aeaa77c0094239"
   },
   {
    "path": "wah_toml.h",

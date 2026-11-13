@@ -73,7 +73,6 @@ struct TomlTable {
     std::map<std::string, std::string> values;
     std::map<std::string, std::vector<float>> arrays;
     std::set<std::string> bad_arrays;  // keys of an array with an item that is not a number (the item is dropped from `arrays`)
-    std::set<std::string> commented_arrays;  // keys of an array with a comment after it on the same line
     std::set<std::string> keys;  // every key written in the section (a key written twice refuses the file)
 };
 
@@ -175,7 +174,9 @@ static std::map<std::string, TomlTable> parse_toml(const std::string& text, std:
         while (std::getline(iss, l)) lines.push_back(l);
     }
     std::string current_section;
+    std::string open_array;  // the key of an array that starts with [ and does not end with ] on its line (the next line is its continuation)
     error.clear();
+    auto at_line = [](size_t n0) { return "line " + std::to_string(n0 + 1) + ": "; };
 
     for (size_t n = 0; n < lines.size(); n++) {
         const std::string line = trim(lines[n]);
@@ -188,7 +189,11 @@ static std::map<std::string, TomlTable> parse_toml(const std::string& text, std:
         // Section header (a comment may follow it)
         if (starts_with(line, "[")) {
             const std::string header = trim(strip_comment(line));
-            if (header.back() != ']') continue;  // skip malformed lines
+            if (header.back() != ']') {
+                error = at_line(n) + "the header is not closed";
+                return tables;
+            }
+            open_array.clear();
             current_section = trim(header.substr(1, header.length() - 2));
             if (tables.count(current_section)) {
                 error = "[" + current_section + "] is written more than once";
@@ -201,9 +206,17 @@ static std::map<std::string, TomlTable> parse_toml(const std::string& text, std:
         // Key-value pair
         size_t eq_pos = line.find('=');
         if (eq_pos == std::string::npos) {
-            continue;  // skip malformed lines
+            // The next line of an array that was opened and not closed says what to do; any other line has no value to read.
+            error = !open_array.empty() ? at_line(n) + open_array + ": the array must be written on one line"
+                                        : at_line(n) + "no = in \"" + line + "\"";
+            return tables;
         }
         const std::string key = trim(line.substr(0, eq_pos));
+        if (current_section.empty()) {
+            error = at_line(n) + "\"" + key + "\" is before any section";
+            return tables;
+        }
+        open_array.clear();
         const std::string rest = trim(line.substr(eq_pos + 1));
         std::string after;  // what follows a string on its line: nothing, or a comment
         // A key written twice in a section refuses the file (before, the last one won in silence).
@@ -264,16 +277,11 @@ static std::map<std::string, TomlTable> parse_toml(const std::string& text, std:
             continue;
         }
 
-        if (current_section.empty()) {
-            continue;  // key-value before any section
-        }
-
         if (!claim()) return tables;
 
         // Array [...] or a number (a comment may follow it)
         const std::string value_str = trim(strip_comment(rest));
         if (starts_with(value_str, "[") && value_str.back() == ']') {
-            if (value_str != rest) tables[current_section].commented_arrays.insert(key);
             std::string array_content = value_str.substr(1, value_str.length() - 2);
             std::vector<float> array;
             std::istringstream arr_iss(array_content);
@@ -293,6 +301,7 @@ static std::map<std::string, TomlTable> parse_toml(const std::string& text, std:
             continue;
         }
 
+        if (starts_with(value_str, "[")) open_array = key;
         tables[current_section].values[key] = value_str;
     }
 
@@ -346,14 +355,11 @@ std::string check_shape(const Shape& shape) {
 }
 
 // What is wrong with the way the arrays of a block are written, or the empty string. Every key that is written must be an array of numbers
-// on one line (an item that is not a number, or a single value, is an error, never "not measured": rule 6), and no comment may follow the
-// array on its line (rule 6, kept in round 33). The first kind of problem is looked for in every key before the second.
+// on one line (an item that is not a number, or a single value, is an error, never "not measured": rule 6). A comment may follow the array on
+// its line (round 35, D72).
 static std::string arrays_problem(const TomlTable& t, std::initializer_list<const char*> keys) {
     for (const char* key : keys) {
         if (t.bad_arrays.count(key) || t.values.count(key)) return std::string(key) + ": not an array of numbers written on one line";
-    }
-    for (const char* key : keys) {
-        if (t.commented_arrays.count(key)) return std::string(key) + ": a comment after the array on the same line (put it on its own line)";
     }
     return std::string();
 }
