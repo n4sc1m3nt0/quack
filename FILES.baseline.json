@@ -1,7 +1,7 @@
 {
  "format": "chicla-baseline-v1",
- "created": "2026-11-12T10:32:28.364Z",
- "seal": "ec48b36782cdb5fad4144eeb70b0bcee251197efed09c3f3c19b3fe57b926d74",
+ "created": "2026-11-16T15:22:52.668Z",
+ "seal": "30d883c6fd5a01d76cda4e296aecff688943fbc7e08d9f6af41ccccd979209e6",
  "files": [
   {
    "path": ".github/workflows/ci.yml",
@@ -10,8 +10,8 @@
   },
   {
    "path": ".gitignore",
-   "size": 273,
-   "sha256": "55d3e8fb0bd0ce485eff5fd54a8b5a5de5db04220eef55e4c7ba1af6bbb0cf39"
+   "size": 348,
+   "sha256": "d65e963ec7065feaf5a6b5f3c684331a9e24e1dc6384f19b637e393dbaf2a680"
   },
   {
    "path": "AGENTS.md",
@@ -20,8 +20,8 @@
   },
   {
    "path": "CHANGELOG.md",
-   "size": 47558,
-   "sha256": "9b1b5a00795adf5eeddc813366362b6c73fcb30faa7602f58a5e704f4eebb06a"
+   "size": 50306,
+   "sha256": "2d85e750f184606e0edd7203370939e4fb099095383c8424ab36c7abbd06084e"
   },
   {
    "path": "CLAUDE.md",
@@ -36,7 +36,7 @@
   {
    "path": "FILES.manifest",
    "size": 2324,
-   "sha256": "3760ffe61fd91f5f3ddb667740c6531bfb2537721c0ff97b77bf9f636db7998e"
+   "sha256": "6c83fda4dfed886aed19e8f1b62a71e2209f02897cc93326409a4fe95f8bae38"
   },
   {
    "path": "LICENSE",
@@ -44,9 +44,9 @@
    "sha256": "711d97b284248eb137421758657111dd8ef8261cbcd86f9b453d1c10ff87a4ef"
   },
   {
-   "path": "QUACK_PROJECT_STATUS-35.md",
-   "size": 9129,
-   "sha256": "410f39a31233aea62bbc9b09dca1d8ded363dddfc8e74057c9cf44e7d39f0b73"
+   "path": "QUACK_PROJECT_STATUS-36.md",
+   "size": 8996,
+   "sha256": "90b3eba9e07166306597f599a185c2fb1c2c676c1bfb5e70ef695b7f62235b9a"
   },
   {
    "path": "README.md",
@@ -55,8 +55,8 @@
   },
   {
    "path": "ROADMAP.md",
-   "size": 30004,
-   "sha256": "302e8d1a70963983e9d9262745508f82c88affccd01aef36c3f461629389ce34"
+   "size": 31008,
+   "sha256": "78630477aa2c540307015b3783efeef3c5ab80010e0ff82d38cd0d10028bd142"
   },
   {
    "path": "chicla.policy.json",
@@ -165,8 +165,8 @@
   },
   {
    "path": "libwah.cpp",
-   "size": 12228,
-   "sha256": "c646eb72807443d1221f1c279638ba883a3a867c450ea20ade27f9a578a44665"
+   "size": 12325,
+   "sha256": "3bbfba0bdb06a54a37137e49cd01edba0e4afaebfe14c8fbfd11272d727f8d9c"
   },
   {
    "path": "libwah.h",
@@ -210,8 +210,8 @@
   },
   {
    "path": "test_guided.cpp",
-   "size": 78471,
-   "sha256": "99ac2c0db51c1f93a4c7606bcaf76e0148c3eabf3451721003b930b49558c2bf"
+   "size": 78536,
+   "sha256": "c66b07fdeb991c824a77a4ef1806c939a70c2cd26820221fab933d0434b91f6b"
   },
   {
    "path": "test_measure.cpp",
@@ -225,8 +225,8 @@
   },
   {
    "path": "version.mjs",
-   "size": 445,
-   "sha256": "bdc3e469b28839375239fca864a3be4d351f999ca0ce21af7e85523e9852f3d9"
+   "size": 447,
+   "sha256": "31b5fc7a32ef71d309633c7019344dbe287ada21a8e52826310912ae10882eb9"
   },
   {
    "path": "wah_analyze.cpp",
@@ -240,13 +240,13 @@
   },
   {
    "path": "wah_capture.cpp",
-   "size": 13099,
-   "sha256": "ee39e41f2c753c002f793abb8abd93b46d95451630c2648275c87e8bec706231"
+   "size": 13180,
+   "sha256": "8a34b8a8caebe6d0488d032929ffc1abf299e5a590e7cba007b5a1d7558b2380"
   },
   {
    "path": "wah_capture.h",
-   "size": 5116,
-   "sha256": "12b0c6a9c1821c78bff15231c3bf0f311d0e6a5e86e7d9cb61b90d39191574db"
+   "size": 5094,
+   "sha256": "465c4201ea96fcdcf711607b01c0ae6b4266bf2e6b046cbec3c37977cf3dcfca"
   },
   {
    "path": "wah_fit.cpp",

@@ -577,7 +577,7 @@ int main() {
     //    round 28. Vox (420 to 2180 Hz, Q 4.1 to 4.6, bass shelf -2.1 dB): no points in round 27, a curve at most 1.79 % off in round 28, heel Q 3.82
     //    (6.8 % low). The tolerances of the holds are the budget of D32 (2 % centre, 10 % Q), which the measurement meets; those of the curve are
     //    set from the round-28 measurement (2 % for the Cry Baby, 3 % for the Vox), tighter than the 5 % of D32, so that the gain of the better tracker is kept.
-    //    The gain is NOT the profile's: see 35c.
+    //    The gain is the profile's since round 36: see 35c (before it, half: 8.90 and 9.12 dB for +18 dB).
     {
         const std::string dir = WAH_EXAMPLES_DIR;
         const std::optional<wah::Profile> cry = wah::load_toml(dir + "/CryBaby_GCB95_Modern.wah"), vox = wah::load_toml(dir + "/Vox_V846_Vintage.wah");
@@ -603,8 +603,8 @@ int main() {
             for (size_t i = 0; curve_ok && i < 11; i++)
                 curve_ok = rel(cs.curve.center_freq[i], f.freq_heel * std::pow((double)f.freq_toe / f.freq_heel, cs.curve.position[i])) < 0.02;
             check(curve_ok, "35b the curve at the 11 positions is within 2 % of 450 * (2100 / 450)^position (the profile's own sweep; measured at most 1.07 %)");
-            check(std::abs(cs.holds.heel.peak_gain_db - 0.5 * f.peak_gain_db) < 1.0 && std::abs(cs.holds.toe.peak_gain_db - 0.5 * f.peak_gain_db) < 1.0,
-                  "35c KNOWN DEFECT of the engine (M7): the gain read is half the profile's dB (9 dB within 1 dB for +18 dB), because the engine scales the amplitude by 10^(dB/40)");
+            check(std::abs(cs.holds.heel.peak_gain_db - f.peak_gain_db) < 1.0 && std::abs(cs.holds.toe.peak_gain_db - f.peak_gain_db) < 1.0,
+                  "35c the gain read through the engine is the profile's (+18 dB within 1 dB); before round 36 it was half (9 dB), because the engine scaled the amplitude by 10^(dB/40) (M7, D65 (a))");
 
             // The Vox profile has a bass shelf of -2.1 dB. The engine's shelf is a stub (b0 scaled alone), which breaks the symmetry of the band-pass:
             // no window is a 2-pole band-pass (before round 28, with estimate_bandpass, the pass had no points). The tracker of shapes reads the

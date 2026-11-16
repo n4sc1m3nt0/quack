@@ -127,7 +127,6 @@ public:
 
 private:
     float sample_rate_;
-    int buffer_size_;
     CaptureState state_ = CaptureState::Idle;
     CaptureCallbacks callbacks_;
 

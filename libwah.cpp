@@ -174,21 +174,23 @@ void Engine::set_position(float position) {
 
 void Engine::compute_coeffs(float center_freq, float q, float gain_db,
                              BiquadCoeffs* out, int num_stages) {
+    // The profile's peak gain is the gain of the whole cascade (round 36, D65 (a)):
+    // a band-pass of unit peak gain per stage, scaled so that the stages together give gain_db
+    // (before, each stage was scaled by 10^(dB/40): the 2-pole gave half the dB).
+    const float stage_gain = std::pow(10.0f, gain_db / (20.0f * (float)num_stages));
+
     // First stage: bandpass filter
     out[0] = compute_bandpass_coeffs(center_freq, q, sample_rate_);
-
-    // Apply peaking gain
-    // (This is a simplification; a full implementation would compose filters more carefully)
-    out[0].b0 *= std::pow(10.0f, gain_db / 40.0f);
-    out[0].b1 *= std::pow(10.0f, gain_db / 40.0f);
-    out[0].b2 *= std::pow(10.0f, gain_db / 40.0f);
+    out[0].b0 *= stage_gain;
+    out[0].b1 *= stage_gain;
+    out[0].b2 *= stage_gain;
 
     // Second stage for 4-pole: another bandpass at same center frequency
     if (num_stages > 1) {
         out[1] = compute_bandpass_coeffs(center_freq, q, sample_rate_);
-        out[1].b0 *= std::pow(10.0f, gain_db / 40.0f);
-        out[1].b1 *= std::pow(10.0f, gain_db / 40.0f);
-        out[1].b2 *= std::pow(10.0f, gain_db / 40.0f);
+        out[1].b0 *= stage_gain;
+        out[1].b1 *= stage_gain;
+        out[1].b2 *= stage_gain;
     }
 
     // Bass shelf (if any)

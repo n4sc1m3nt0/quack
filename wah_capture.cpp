@@ -23,7 +23,8 @@ static constexpr float CAPTURE_DURATION_SEC = 3.5f;
 static constexpr float SIGNAL_DETECT_THRESHOLD_DB = -60.0f;
 
 Capturer::Capturer(float sample_rate, int buffer_size, const CaptureCallbacks& callbacks)
-    : sample_rate_(sample_rate), buffer_size_(buffer_size), callbacks_(callbacks) {
+    : sample_rate_(sample_rate), callbacks_(callbacks) {
+    (void)buffer_size;  // the capture buffer has a fixed duration; the block size is not needed (round 36)
     // Pre-allocate capture buffer
     int capture_buffer_samples = (int)(CAPTURE_DURATION_SEC * sample_rate);
     current_capture_buffer_.resize(capture_buffer_samples);

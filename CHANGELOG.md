@@ -1,7 +1,20 @@
-<!-- CHANGELOG_FINGERPRINT: seq=35 file=QUACK_PROJECT_STATUS-35.md app_sha256_12=94557a759b14 changelog_sha256_12=ccfe9e218c93 (bump-round.mjs: app hash CHANGED, changelog hash recomputed) -->
+<!-- CHANGELOG_FINGERPRINT: seq=36 file=QUACK_PROJECT_STATUS-36.md app_sha256_12=b4bc7fe3fdd9 changelog_sha256_12=1345661136b4 (bump-round.mjs: app hash unchanged, changelog hash recomputed) -->
 # Changelog
 
 Archived rounds (nothing deleted): `docs/archive/changelog/CHANGELOG-archive-rounds-13-25.md`. References to older rounds elsewhere in the docs ("see CHANGELOG.md's Round N") live there now.
+
+## Round 36 — the gain in dB (M7, first piece), the unused field, `.gitignore` (v0.0.36)
+
+- Decisions of the owner, 2026-11-16 («confirmo as decisões todas»; «tu nunca fazes push, só eu. podes acrescentar ao gitignore»): (b) and (d) as suggested in the status file of round 35; G3 stays with the owner, (c) MSVC waits (D73).
+- Session start: `chicla` updated to 0.4.0 at the owner's request (`npm install -g chicla@0.4.0`; the project pins no chicla version). `chicla bump-round --verify` and `chicla check-manifest` passed (57 files) on the complete zip; the first zip lacked `.github/` and `.gitignore` and was refused by `check-manifest`.
+- `libwah.cpp`, `Engine::compute_coeffs`: the cascade now gives the profile's `peak_gain_db`: each stage is scaled by `10^(gain_db / (20 * stages))` (before, `10^(gain_db/40)` per stage, so a 2-pole gave half the dB: D65 (a)). A 4-pole cascade is unchanged (two stages of `10^(dB/40)`). The bass shelf stub is untouched (next M7 round).
+- `test_guided.cpp`, 35c turned round, written first and seen red: it now needs the gain read through the virtual pedal within 1 dB of the profile's (+18 dB); it needed 9 dB within 1 dB before. No check added or removed.
+- `wah_capture.h` / `wah_capture.cpp`: the private field `buffer_size_` (clang: `private field is not used`) removed; the constructor keeps its argument and ignores it with `(void)`, so no caller changes.
+- `.gitignore`: `.claude/` and `__MACOSX/` added (they came in the owner's zip and showed as untracked).
+- Run: g++ Release, no warnings; all seven programs exit 0 (35c red before the fix, green after). With `-DWAH_SANITIZE=ON` (Debug, a build directory of its own) the same seven exit 0 and none printed an AddressSanitizer or UndefinedBehaviorSanitizer report. Not run: `ctest` as such, clang, macOS, MSVC (the CI is gate G3, the owner's); the measured gain value was not printed, only checked within 1 dB.
+- Broken on purpose (rule 2 of `CLAUDE.md`, done after the delivery was first made): the stage gain set back to half the dB in `libwah.cpp` made 35c go red and nothing else; restored (identical to the delivered file), green again.
+- Noticed, not applied (a change of rule is the owner's): `chicla update` shows `CLAUDE.md` and `AGENTS.md` differ from the 0.4.0 templates (decisions listed in the reply and numbered, section 1b on how the owner answers, commands in a code box without comments); `--apply` would also drop section 5 (this project) and the sanitizer step, so it was not run.
+- Not done, by decision: G3 (the CI run) is the owner's; MSVC (c); the shelf and the state-variable filter. Noticed and not fixed: the engine still multiplies by `10^(input_gain_db/20)` and the output gain with `std::pow` per sample.
 
 ## Round 35 — no line lost in silence, rule 6 dropped, CTest and the CI workflow (v0.0.35)
 

@@ -31,3 +31,7 @@ __pycache__/
 dist/
 *.zip
 *.tar.gz
+
+# Local tooling and archive junk (never in a delivery)
+.claude/
+__MACOSX/
